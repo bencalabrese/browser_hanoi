@@ -8,12 +8,8 @@ HanoiView.prototype.setupTowers = function () {
   for(var i = 0; i < 3; i++) {
     var $tower = $("<ul></ul>");
 
-    for(var j = 1; j < 4; j++) {
-      var $disk = $("<li></li>");
-      // if (i === 0) {
-      //   $disk.addClass("disk-" + j);
-      // }
-      $tower.append($disk);
+    for(var j = 0; j < 3; j++) {
+      $tower.append($("<li></li>"));
     }
 
     $tower.attr("id", i);
@@ -33,11 +29,19 @@ HanoiView.prototype.bindEvents = function () {
       var startTowerIdx = parseInt(self.$startTower.attr("id"));
       var endTowerIdx = parseInt($endTower.attr("id"));
 
-      self.game.move(startTowerIdx, endTowerIdx);
+      if (!self.game.move(startTowerIdx, endTowerIdx)) {
+        alert("Invalid move, try again");
+      }
+
       self.$startTower.removeClass("selected");
       self.$startTower = null;
-
       self.render();
+
+      if (self.game.isWon()) {
+        self.$rootEl.addClass("game-over");
+        alert("Good Work, You...");
+        $("ul").off("click");
+      }
     }
   });
 };
