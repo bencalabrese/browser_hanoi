@@ -7,5 +7,6 @@ $(function () {
   var view = new HanoiView(game,$rootEl);
 
   view.setupTowers();
+  view.render();
   view.bindEvents();
 });

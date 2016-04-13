@@ -10,9 +10,9 @@ HanoiView.prototype.setupTowers = function () {
 
     for(var j = 1; j < 4; j++) {
       var $disk = $("<li></li>");
-      if (i === 0) {
-        $disk.addClass("disk-" + j);
-      }
+      // if (i === 0) {
+      //   $disk.addClass("disk-" + j);
+      // }
       $tower.append($disk);
     }
 
@@ -37,9 +37,26 @@ HanoiView.prototype.bindEvents = function () {
       self.$startTower.removeClass("selected");
       self.$startTower = null;
 
-      self.game.print();
+      self.render();
     }
   });
+};
+
+HanoiView.prototype.render = function() {
+  $(".disk-1").removeClass("disk-1");
+  $(".disk-2").removeClass("disk-2");
+  $(".disk-3").removeClass("disk-3");
+
+  for (var i = 0; i < 3; i++) {
+    // towers
+    var $viewTower = $("ul").eq(i);
+    var gameTower = this.game.towers[i];
+    var $towerDiscs = $viewTower.children("li");
+    for (var j = 0; j < gameTower.length; j++) {
+      var k = (j - 2) * -1;
+      $towerDiscs.eq(k).addClass("disk-" + gameTower[j]);
+    }
+  }
 };
 
 
